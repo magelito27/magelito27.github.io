@@ -1,195 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alerta Yape - Descarga Segura</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px 30px;
-            max-width: 450px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-        .logo {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            color: white;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
-        .ref-badge {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 25px;
-            display: inline-block;
-            margin: 15px 0;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .download-btn {
-            display: block;
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-            color: white;
-            padding: 18px 30px;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 18px;
-            margin: 25px 0;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
-        }
-        .download-btn:hover {
-            transform: translateY(-2px);
-        }
-        .steps {
-            text-align: left;
-            margin: 25px 0;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 10px;
-        }
-        .steps h3 {
-            margin-bottom: 15px;
-            color: #333;
-            font-size: 16px;
-        }
-        .steps ol {
-            padding-left: 20px;
-            color: #555;
-            font-size: 14px;
-        }
-        .steps li {
-            margin: 10px 0;
-        }
-        .info-box {
-            background: #f5f5f5;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-        .info-box p {
-            color: #555;
-            margin: 8px 0;
-            font-size: 14px;
-        }
-        .security-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            color: #4CAF50;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .hidden {
-            display: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alerta Yape</title>
+<style>
+  body { font-family: sans-serif; background:#121212; color:#fff; text-align:center; padding:40px 20px; }
+  h1 { color:#FF5722; }
+  .code { font-size:32px; font-weight:bold; color:#4FC3F7; margin:16px 0; }
+  a.btn { display:inline-block; margin-top:24px; padding:14px 28px; background:#25D366; color:#fff; border-radius:12px; text-decoration:none; font-weight:bold; }
+  p { color:#bbb; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">🛡️</div>
-        <h1>Alerta Yape</h1>
-        <p class="subtitle">Protege tus transacciones en tiempo real</p>
-        
-        <div id="ref-section" class="hidden">
-            <div class="ref-badge"> Referido por: <span id="ref-code"></span></div>
-            <p style="font-size: 14px; color: #666; margin: 10px 0;">Copia este código y úsalo al abrir la app</p>
-        </div>
+  <h1>📱 Alerta Yape</h1>
+  <p>Alertas de voz para pagos de Yape y Plin</p>
+  <div id="zonaCodigo"></div>
+  <a id="btnApp" class="btn" href="#">ABRIR ALERTA YAPE</a>
+  <p id="nota"></p>
 
-        <a href="#" class="download-btn" id="download-btn" onclick="handleDownload()">
-            📥 Descargar APK
-        </a>
-        
-        <div class="steps">
-            <h3>📱 Instalación en 3 pasos:</h3>
-            <ol>
-                <li>Descarga el archivo APK</li>
-                <li>Permite "Instalar de fuentes desconocidas"</li>
-                <li>Abre el archivo e instala</li>
-            </ol>
-        </div>
-        
-        <div class="info-box">
-            <p><strong>Versión:</strong> 1.1.0</p>
-            <p><strong>Tamaño:</strong> ~15 MB</p>
-            <p><strong>Compatible:</strong> Android 8.0+</p>
-        </div>
-        
-        <div class="security-badge">
-            <span>🔒</span>
-            <span>Descarga segura y verificada</span>
-        </div>
-    </div>
+  <script>
+    var params = new URLSearchParams(window.location.search);
+    var ref = params.get('ref');
+    var btn = document.getElementById('btnApp');
 
-    <script>
-        // Capturar parámetro de referido de la URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const refCode = urlParams.get('ref');
-
-        if (refCode) {
-            document.getElementById('ref-section').classList.remove('hidden');
-            document.getElementById('ref-code').innerText = refCode;
-            
-            // Guardar en localStorage para que la app lo pueda leer después
-            localStorage.setItem('pending_referral', refCode);
-        }
-
-        function handleDownload() {
-            // Aquí pondremos el enlace real de Firebase Storage cuando lo tengamos
-            // Por ahora, muestra un mensaje
-            alert('La descarga comenzará pronto. Mientras tanto, asegúrate de tener activada la opción "Instalar de fuentes desconocidas" en tu celular.');
-            
-            // Guardar evento de descarga
-            if (refCode) {
-                console.log('Descarga iniciada con referido:', refCode);
-            }
-        }
-
-        // Verificar si ya hay un referido pendiente
-        window.addEventListener('load', () => {
-            const pendingRef = localStorage.getItem('pending_referral');
-            if (pendingRef && !refCode) {
-                document.getElementById('ref-section').classList.remove('hidden');
-                document.getElementById('ref-code').innerText = pendingRef;
-            }
-        });
-    </script>
+    if (ref) {
+      document.getElementById('zonaCodigo').innerHTML =
+        '<p>Código de referido:</p>' +
+        '<div class="code">' + ref + '</div>' +
+        '<p>Toca el botón para abrir la app y canjearlo automáticamente (7 días gratis).</p>';
+      btn.href = 'intent://?ref=' + encodeURIComponent(ref) +
+        '#Intent;action=android.intent.action.VIEW;scheme=https;package=com.alertayape.app;category=android.intent.category.DEFAULT;S.browser_fallback_url=https://magelito27.github.io/?ref=' +
+        encodeURIComponent(ref) + ';end';
+    } else {
+      document.getElementById('zonaCodigo').innerHTML =
+        '<p>Instala la app y recibe alertas de voz por cada pago.</p>';
+      btn.href = 'intent://#Intent;action=android.intent.action.VIEW;scheme=https;package=com.alertayape.app;S.browser_fallback_url=https://github.com/magelito27/Alerta-Yape;end';
+    }
+  </script>
 </body>
 </html>
