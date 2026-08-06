@@ -10,32 +10,45 @@
   .code { font-size:32px; font-weight:bold; color:#4FC3F7; margin:16px 0; }
   a.btn { display:inline-block; margin-top:24px; padding:14px 28px; background:#25D366; color:#fff; border-radius:12px; text-decoration:none; font-weight:bold; }
   p { color:#bbb; }
+  .links { margin-top:48px; font-size:14px; }
+  .links a { color:#4FC3F7; text-decoration:none; margin:0 8px; }
 </style>
 </head>
 <body>
   <h1>📱 Alerta Yape</h1>
-  <p>Alertas de voz para pagos de Yape y Plin</p>
+  <p>Alertas de voz y visuales para pagos de Yape y Plin.<br>Nunca pierdas un pago mientras atiendes tu negocio.</p>
   <div id="zonaCodigo"></div>
-  <a id="btnApp" class="btn" href="#">ABRIR ALERTA YAPE</a>
+  <a id="btnApp" class="btn" href="guia-instalacion.html">ABRIR ALERTA YAPE</a>
   <p id="nota"></p>
+
+  <p class="links">
+    <a href="guia-instalacion.html">📥 Guía de instalación</a> ·
+    <a href="privacidad.html">🔐 Política de Privacidad</a> ·
+    <a href="https://github.com/magelito27/Alerta-Yape">💻 Código fuente</a>
+  </p>
 
   <script>
     var params = new URLSearchParams(window.location.search);
     var ref = params.get('ref');
     var btn = document.getElementById('btnApp');
+    var esAndroid = /Android/i.test(navigator.userAgent);
 
     if (ref) {
       document.getElementById('zonaCodigo').innerHTML =
         '<p>Código de referido:</p>' +
         '<div class="code">' + ref + '</div>' +
         '<p>Toca el botón para abrir la app y canjearlo automáticamente (7 días gratis).</p>';
-      btn.href = 'intent://?ref=' + encodeURIComponent(ref) +
-        '#Intent;action=android.intent.action.VIEW;scheme=https;package=com.alertayape.app;category=android.intent.category.DEFAULT;S.browser_fallback_url=https://magelito27.github.io/?ref=' +
-        encodeURIComponent(ref) + ';end';
+      btn.href = esAndroid
+        ? 'intent://?ref=' + encodeURIComponent(ref) +
+          '#Intent;action=android.intent.action.VIEW;scheme=https;package=com.alertayape.app;category=android.intent.category.DEFAULT;S.browser_fallback_url=https://magelito27.github.io/?ref=' +
+          encodeURIComponent(ref) + ';end'
+        : 'guia-instalacion.html';
     } else {
       document.getElementById('zonaCodigo').innerHTML =
         '<p>Instala la app y recibe alertas de voz por cada pago.</p>';
-      btn.href = 'intent://#Intent;action=android.intent.action.VIEW;scheme=https;package=com.alertayape.app;S.browser_fallback_url=https://github.com/magelito27/Alerta-Yape;end';
+      btn.href = esAndroid
+        ? 'intent://#Intent;action=android.intent.action.VIEW;scheme=https;package=com.alertayape.app;S.browser_fallback_url=https://github.com/magelito27/Alerta-Yape;end'
+        : 'guia-instalacion.html';
     }
   </script>
 </body>
